@@ -1,19 +1,29 @@
 .App {
   text-align: center;
   display: flex;
-  width: 50%;
+  width: 300px;
   margin: 0 auto;
   border: 1px solid black;
   padding: 20px;
+  background: darkslategrey;
 }
+
 
 #display {
   background-color: #a4b987;
   border: 1px solid black;
   margin-bottom: 20px;
+  font-size: 30px;
 }
 
 .Button {
   width: 80px;
   height: 50px;
+  font-size: 30px;
+}
+
+.Button#clear,
+.Button#equals {
+  width: 120px;
+  background-color: lightcoral;
 }

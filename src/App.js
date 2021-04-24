@@ -1,24 +1,26 @@
 import './App.css';
-import Button from './Button'
+import Buttons from './Buttons'
 import Display from './Display'
 import { useState } from 'react'
 
 function App() {
   const [display, setDisplay] = useState(0)
 
-  const numbers = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]
-  const operators = ["add", "subtract", "multiply", "divide"]
+  const numbers = ["nine", "eight", "seven", "six", "five", "four", "three", "two", "one", "zero"]
+  const operators = ["add", "subtract", "multiply", "divide", "decimal", "clear", "equals"]
 
   const handleButtonClick = (event) => {
     const id = event.target.id
     const value = event.target.value
+    // Decide how to handle the button that was clicked
     let type = ""
-    if (numbers.includes(id) || operators.includes(id) || id === "decimal") {
-      type = "input"
-    } else if (id === "clear") {
+    if (id === "clear") {
       type = "clear"
     } else if (id === "equals") {
       type = "equals"
+    }
+    else if (numbers.includes(id) || operators.includes(id) || id === "decimal") {
+      type = "input"
     }
     switch (type) {
       case "input":
@@ -68,42 +70,13 @@ function App() {
     }
   }
 
-  const numberButtons = numbers.map((number, index) => (
-    <Button type="numberButton" value={index} id={number} key={index} handleButtonClick={handleButtonClick} />))
 
-  const operatorButtons = operators.map((operator) => {
-    let value = "+"
-    switch (operator) {
-      case "subtract":
-        value = "-";
-        break;
-      case "multiply":
-        value = "*";
-        break;
-      case "divide":
-        value = "/"
-        break;
-      case "decimal":
-        value = "."
-        break;
-      case "clear":
-        value = "C";
-        break;
-      default:
-        break;
-    }
-    return <Button value={value} id={operator} key={operator} handleButtonClick={handleButtonClick} />
-  })
 
   return (
     <div className="App">
       <main className="Calculator">
         <Display display={display} />
-        {numberButtons}
-        {operatorButtons}
-        <Button id="decimal" key="decimal" value="." handleButtonClick={handleButtonClick} />
-        <Button id="clear" key="clear" value="C" handleButtonClick={handleButtonClick} />
-        <Button id="equals" key="equals" value="=" handleButtonClick={handleButtonClick} />
+        <Buttons numbers={numbers} operators={operators} handleButtonClick={handleButtonClick} />
       </main>
     </div>
   );
