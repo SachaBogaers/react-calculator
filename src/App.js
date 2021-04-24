@@ -30,10 +30,15 @@ function App() {
               return value
             }
           } else {
-            // console.log(typeof prevState, typeof value)
-            // if (prevState.toString().indexOf(".") > -1) {
-            //   return prevState
-            // }
+            const input = prevState.toString()
+            if (input.charAt(input.length - 1) === "." && value === ".") {
+              return prevState
+            } else {
+              const numberArray = input.split(/[*/+-]/)
+              if (numberArray[numberArray.length - 1].includes(".") && value === ".") {
+                return prevState
+              }
+            }
             return prevState + value
           }
         })
@@ -42,8 +47,19 @@ function App() {
         setDisplay(0)
         break;
       case "equals":
+        // Work with what user had typed in on display
+        let calculation = display
+        // Check if there are several operators after one another
+        const regex = /[*/+-]+[*/+]/g
+        // If several operators, replace set with the last one
+        if (regex.test(calculation)) {
+          const match = calculation.match(regex)
+          match.forEach(item => {
+            calculation = calculation.replace(item, item.charAt(item.length - 1))
+          })
+        }
         try {
-          const output = +eval(display).toFixed(4)
+          const output = +eval(calculation).toFixed(4)
           setDisplay(output)
         }
         catch (err) {
